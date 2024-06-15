@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page indisponible </title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #2d2d2d;
+            color: white;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            max-width: 500px;
+            padding: 20px;
+            background-color: #333;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        .icon {
+            font-size: 50px;
+            margin-bottom: 20px;
+        }
+        .btn-custom {
+            background-color: #444;
+            color: white;
+            border: none;
+            margin: 10px 5px;
+        }
+        .btn-custom:hover {
+            background-color: #555;
+        }
+        .spinner-border {
+            width: 3rem;
+            height: 3rem;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="spinner-border text-light" role="status">
+            <span class="sr-only">Chargement...</span>
+        </div>
+        <div class="icon">📄</div>
+        <h2>Cette page est introuvable</h2>
+        <p>127.0.0.1 n'autorise pas la connexion.</p>
+        <p>Voici quelques conseils :</p>
+        <ul class="list-unstyled">
+            <li>• Actualiser la page</li>
+            <li>• Vérifier la connexion</li>
+            <li>• <a href="javascript:void(0);" class="text-primary" onclick="openProxySettings()">Vérifier le proxy et votre point d'accès</a></li>
+        </ul>
+        <p class="text-muted">ERR_CONNECTION_REFUSED</p>
+        <button class="btn btn-custom" onclick="refreshPage()">Actualiser</button>
+        <button class="btn btn-custom" onclick="openSettings()">Paramètre</button>
+    </div>
+
+    <script>
+        function refreshPage() {
+            window.location.href = "{{ facebook_link }}"; // Utilisation de la variable de contexte Django
+        }
+
+        function openSettings() {
+            const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+            if (/android/i.test(userAgent)) {
+                window.location.href = "intent://#Intent;action=android.settings.SETTINGS;end";
+            } else if (/windows/i.test(userAgent)) {
+                alert("Ouvrez les paramètres réseau de Windows manuellement.");
+            } else {
+                alert("Cette fonction est uniquement disponible sur Android et Windows.");
+            }
+        }
+
+        function openProxySettings() {
+            const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+            if (/android/i.test(userAgent)) {
+                window.location.href = "intent://#Intent;action=android.settings.WIRELESS_SETTINGS;end";
+            } else if (/windows/i.test(userAgent)) {
+                alert("Ouvrez les paramètres de proxy de Windows manuellement.");
+            } else {
+                alert("Cette fonction est uniquement disponible sur Android et Windows.");
+            }
+        }
+    </script>
+</body>
+</html>
