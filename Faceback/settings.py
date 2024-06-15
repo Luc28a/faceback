@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
-
+import os
 from pathlib import Path
 import django_heroku
 import dj_database_url
@@ -86,6 +86,9 @@ DATABASES = {
         'PORT': '3306',
     }
 }
+
+DATABASES['default'] = dj_database_url.config(default=os.environ.get('DATABASE_URL'))
+
 
 
 # Password validation
